@@ -1,5 +1,6 @@
 package com.grammercetamol.models.services;
 
+import com.grammercetamol.mail.mailtoken_confirmation.Email_ConfirmationService;
 import com.grammercetamol.models.implementation.UserDetailsImpl;
 import com.grammercetamol.models.AppUsers;
 import com.grammercetamol.models.ERole;
@@ -8,8 +9,8 @@ import com.grammercetamol.payload.request.LoginRequest;
 import com.grammercetamol.payload.request.SignupRequest;
 import com.grammercetamol.payload.response.JwtResponse;
 import com.grammercetamol.payload.response.MessageResponse;
-import com.grammercetamol.repository.AppUserRepository;
-import com.grammercetamol.repository.RoleRepository;
+import com.grammercetamol.models.repository.AppUserRepository;
+import com.grammercetamol.models.repository.RoleRepository;
 import com.grammercetamol.security.jwt.JwtUtils;
 import com.grammercetamol.security.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,8 @@ public class Services {
 
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    Email_ConfirmationService email_confirmationService;
 
 
 
@@ -78,32 +82,27 @@ public class Services {
             roles.add(userRole);
         } else {
             strRoles.forEach(role ->{
-                switch (role){
-                    case "admin":
+                switch (role) {
+                    case "admin" -> {
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-
-                        break;
-
-                    case "student":
+                    }
+                    case "student" -> {
                         Role studentRole = roleRepository.findByName(ERole.ROLE_STUDENT)
-                                .orElseThrow(()-> new RuntimeException("Error: Role is not found"));
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found"));
                         roles.add(studentRole);
-
-                        break;
-
-                    case "mod":
+                    }
+                    case "mod" -> {
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
-
-                        break;
-
-                    default:
+                    }
+                    default -> {
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
+                    }
                 }
             });
         }
@@ -122,6 +121,14 @@ public class Services {
                                             .getPassword()
                             ),
                     dob
+            );
+
+
+
+            email_confirmationService.SaveAndSendToken(
+                    signupRequest.getEmail(),
+                    signupRequest.getFirstname(),
+                    signupRequest.getLastname()
             );
 
             appUsers.setRoles(roles);
@@ -146,7 +153,7 @@ public class Services {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(
