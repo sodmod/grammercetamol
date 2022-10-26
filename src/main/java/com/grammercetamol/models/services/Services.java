@@ -159,7 +159,6 @@ public class Services {
                         jwt,
                         userDetails.getId(),
                         userDetails.getUsername(),
-                        userDetails.getEmail(),
                         roles,
                         LOGIN_SUCCESS,
                         SUCCESSCODE));
