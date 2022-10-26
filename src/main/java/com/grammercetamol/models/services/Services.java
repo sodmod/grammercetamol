@@ -1,16 +1,16 @@
 package com.grammercetamol.models.services;
 
 import com.grammercetamol.mail.mailtoken_confirmation.Email_ConfirmationService;
-import com.grammercetamol.models.implementation.UserDetailsImpl;
 import com.grammercetamol.models.AppUsers;
 import com.grammercetamol.models.ERole;
 import com.grammercetamol.models.Role;
+import com.grammercetamol.models.implementation.UserDetailsImpl;
+import com.grammercetamol.models.repository.AppUserRepository;
+import com.grammercetamol.models.repository.RoleRepository;
 import com.grammercetamol.payload.request.LoginRequest;
 import com.grammercetamol.payload.request.SignupRequest;
 import com.grammercetamol.payload.response.JwtResponse;
 import com.grammercetamol.payload.response.MessageResponse;
-import com.grammercetamol.models.repository.AppUserRepository;
-import com.grammercetamol.models.repository.RoleRepository;
 import com.grammercetamol.security.jwt.JwtUtils;
 import com.grammercetamol.security.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.grammercetamol.payload.response.StaticStrings.StaticStrings.*;
 
 @Component
 @Service
@@ -60,18 +62,10 @@ public class Services {
         if (appUserRepository.existsByUsername(signupRequest.getUsername())){
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already is already taken!", 0));
-        }
-
-        if(appUserRepository.existsByEmail(signupRequest.getEmail())){
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!", 0));
+                    .body(new MessageResponse("Error: Email is already is already taken!", 0));
         }
 
 //        Create new appUsers's account
-
-
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -113,7 +107,6 @@ public class Services {
                     signupRequest.getLastname(),
                     signupRequest.getOthername(),
                     signupRequest.getUsername(),
-                    signupRequest.getEmail(),
                     passwordEncoder
                             .bCryptPasswordEncoder()
                             .encode(
@@ -126,7 +119,7 @@ public class Services {
 
 
             email_confirmationService.SaveAndSendToken(
-                    signupRequest.getEmail(),
+                    signupRequest.getUsername(),
                     signupRequest.getFirstname(),
                     signupRequest.getLastname()
             );
@@ -139,11 +132,15 @@ public class Services {
 
 
 
-        return  ResponseEntity.ok(new MessageResponse("AppUsers registered successfully", 1));
+        return  ResponseEntity.ok(new MessageResponse(REGISTRATION_SUCCESSFULLY, SUCCESSCODE));
     }
 
     public ResponseEntity<?> authenticateUser(@Validated @NotNull LoginRequest loginRequest){
-        String so = "sodiq";
+
+        AppUsers appUsers = appUserRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+        System.out.println(appUsers);
+
+
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -164,8 +161,8 @@ public class Services {
                         userDetails.getUsername(),
                         userDetails.getEmail(),
                         roles,
-                        "login successfully",
-                        1));
+                        LOGIN_SUCCESS,
+                        SUCCESSCODE));
 
     }
 

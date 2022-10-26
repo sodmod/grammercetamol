@@ -1,8 +1,6 @@
 package com.grammercetamol.models;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,14 +9,11 @@ import java.util.Set;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Entity
 @Table(name = "appusers",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "username")
         }
 )
 public class AppUsers {
@@ -41,31 +36,22 @@ public class AppUsers {
     private String firstName;
     @Column(
             name = "lastname",
-            nullable = false,
-            length = 50
+            nullable = false
     )
     private String lastName;
     @Column(
             name = "othername",
-            nullable = false,
-            length = 50
+            nullable = false
     )
     private String otherName;
 
     @Column(
-            length = 20,
-            nullable = false
+            name = "username"
     )
     private String username;
 
-    @Column(
-            length = 100,
-            nullable = false
-    )
-    private String email;
 
     @Column(
-            length = 50,
             nullable = false
     )
     private String password;
@@ -90,12 +76,11 @@ public class AppUsers {
     public AppUsers(){
     }
 
-    public AppUsers(String firstName,String lastName , String otherName, String username, String email, String password, Date dob){
+    public AppUsers(String firstName,String lastName , String otherName, String username, String password, Date dob){
         this.firstName = firstName;
         this.lastName = lastName;
         this.otherName = otherName;
         this.username = username;
-        this.email = email;
         this.password = password;
         this.dob = dob;
     }

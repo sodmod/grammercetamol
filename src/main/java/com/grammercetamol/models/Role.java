@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 import static javax.persistence.EnumType.STRING;
-import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.AUTO;
 
 @Getter
 @Setter
@@ -22,12 +22,12 @@ public class Role {
             allocationSize = 1
     )
     @GeneratedValue(
-            strategy = IDENTITY,
+            strategy = AUTO,
             generator = "role_sequence"
     )
     private Integer id;
 
     @Enumerated(STRING)
-    @Column(length = 20)
+    @Column
     private ERole name;
 }

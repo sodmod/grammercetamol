@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Data
-@Table(name = "token")
-@Entity
 @NoArgsConstructor
+@Entity
+@Table(name = "token")
 public class Email_ConfirmationUtils {
 
     @Id
@@ -56,7 +56,7 @@ public class Email_ConfirmationUtils {
     public Email_ConfirmationUtils(String token, String email, LocalDateTime createdAt, LocalDateTime expiredAt){
         this.token = token;
         this.email = email;
-        this.confirmedAt = createdAt;
+        this.createdAt = createdAt;
         this.expiredAt = expiredAt;
     }
 }

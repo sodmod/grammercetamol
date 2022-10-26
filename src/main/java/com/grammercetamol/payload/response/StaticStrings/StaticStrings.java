@@ -1,6 +1,11 @@
-package com.grammercetamol.StaticStrings;
+package com.grammercetamol.payload.response.StaticStrings;
 
 public class StaticStrings {
+
+    public static String REGISTRATION_SUCCESSFULLY = "User Registered Successfully";
+    public static String LOGIN_SUCCESS = "Login Successfully";
+    public static int SUCCESSCODE = 0;
+    public static int ERRORCODE = 1;
 
     public static String MAIL_CONFIRMATION = "mail confirmation";
 

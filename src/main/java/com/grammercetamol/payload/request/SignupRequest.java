@@ -7,20 +7,18 @@ import java.util.Set;
 
 @Data
 public class SignupRequest {
+    @NotNull
     private String firstname;
+    @NotNull
     private String lastname;
+    @NotNull
     private String othername;
-
     @NotNull
     private String username;
-
-    @NotNull
-    private String email;
-
     @NotNull
     private Set<String> role;
-
     @NotNull
     private String password;
+    @NotNull
     private String dob;
 }

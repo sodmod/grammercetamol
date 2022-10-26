@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.grammercetamol.StaticStrings.StaticStrings.MAIL_CONFIRMATION;
-import static com.grammercetamol.StaticStrings.StaticStrings.MESSAGE;
+import static com.grammercetamol.payload.response.StaticStrings.StaticStrings.MAIL_CONFIRMATION;
+import static com.grammercetamol.payload.response.StaticStrings.StaticStrings.MESSAGE;
 
 @Service
 @Component
