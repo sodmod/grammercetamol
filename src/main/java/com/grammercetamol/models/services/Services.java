@@ -143,6 +143,7 @@ public class Services {
     }
 
     public ResponseEntity<?> authenticateUser(@Validated @NotNull LoginRequest loginRequest){
+        String so = "sodiq";
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -165,6 +166,7 @@ public class Services {
                         roles,
                         "login successfully",
                         1));
+
     }
 
 }
