@@ -1,4 +1,4 @@
-package com.grammercetamol.repository;
+package com.grammercetamol.models.repository;
 
 import com.grammercetamol.models.ERole;
 import com.grammercetamol.models.Role;

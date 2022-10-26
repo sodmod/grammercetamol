@@ -8,8 +8,8 @@ import com.grammercetamol.payload.request.LoginRequest;
 import com.grammercetamol.payload.request.SignupRequest;
 import com.grammercetamol.payload.response.JwtResponse;
 import com.grammercetamol.payload.response.MessageResponse;
-import com.grammercetamol.repository.AppUserRepository;
-import com.grammercetamol.repository.RoleRepository;
+import com.grammercetamol.models.repository.AppUserRepository;
+import com.grammercetamol.models.repository.RoleRepository;
 import com.grammercetamol.security.jwt.JwtUtils;
 import com.grammercetamol.security.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,6 +123,8 @@ public class Services {
                             ),
                     dob
             );
+
+
 
             appUsers.setRoles(roles);
             appUserRepository.save(appUsers);
