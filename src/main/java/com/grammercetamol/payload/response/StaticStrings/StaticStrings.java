@@ -25,7 +25,7 @@ public class StaticStrings {
                 "      <h1 style=\"align-items: center\">Email Confirmation</h1>\n" +
                 "      <p>Dear " + name + "</p>\n" +
                 "      <p>Click the link below to confirm your email</p>\n" +
-                "      <p><a href="+ li + ">this is the link below\n" +li+"</a></p>\n" +
+                "      <p><a href="+li+">this is the link below\n</a>click here</p>\n" +
                 "    </div>\n" +
                 "  </body>\n" +
                 "</html>";
