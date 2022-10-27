@@ -31,25 +31,48 @@ public class JwtUtils {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder().setClaims(claims)
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(HS512, jwtSecret)
+                .setSubject(
+                        userPrincipal.getUsername()
+                )
+                .setIssuedAt(
+                        new Date()
+                )
+                .setExpiration(
+                        new Date(
+                                (new Date())
+                                        .getTime() + jwtExpirationMs
+                        )
+                )
+                .signWith(
+                        HS512, jwtSecret
+                )
                 .compact();
     }
 
     public String getUserNameFromJwtToken(String token){
         return Jwts.parser()
-                .setSigningKey(jwtSecret)
-                .parseClaimsJws(token)
+                .setSigningKey(
+                        jwtSecret
+                )
+                .parseClaimsJws(
+                        token
+                )
                 .getBody()
                 .getSubject();
     }
 
     public boolean validateJwtToken(String authToken){
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            Jwts
+                    .parser()
+                    .setSigningKey(
+                            jwtSecret
+                    ).
+                    parseClaimsJws(
+                            authToken
+                    );
             return true;
+
         } catch (SignatureException e){
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e){
