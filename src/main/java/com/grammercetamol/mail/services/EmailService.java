@@ -12,12 +12,17 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+/*In this package, It is an independent package
+* It handles sending of mail either with attachment or not... Attachment is yet to be implemented..
+* As project is becoming big, attachment will be implementing it
+* */
 @Service
 @AllArgsConstructor
 public class EmailService implements EmailSender {
     @Autowired
     JavaMailSender mailSender;
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+
 
     @Override
     @Async

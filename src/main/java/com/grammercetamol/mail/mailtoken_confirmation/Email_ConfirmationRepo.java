@@ -1,4 +1,8 @@
 package com.grammercetamol.mail.mailtoken_confirmation;
+/*
+* In the Repo class, I am handling if confirmation of token where the token will b saved into a database
+* which will be use to query the database if the info sent is correct or not i.e if the application is using otp approach
+* */
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

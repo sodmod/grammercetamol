@@ -1,4 +1,7 @@
 package com.grammercetamol.mail.mailtoken_confirmation;
+/*
+* This service class handles all the logic necessary
+* */
 
 import com.grammercetamol.mail.services.EmailService;
 import lombok.Data;
@@ -30,6 +33,7 @@ public class Email_ConfirmationService {
 
 
 
+    //This handles sending mail to a user and saving the user email and token
     public String SaveAndSendToken(@NotNull String email, @NotNull String firstname, @NotNull String lastname){
 
         String name = firstname.concat(" "+ lastname);

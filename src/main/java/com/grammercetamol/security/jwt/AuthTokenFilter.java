@@ -51,11 +51,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             }
         } catch(Exception e) {
             logger.error("Cannot set suer authentication: {}", e);
+            e.printStackTrace();
+            e.getMessage();
         }
 
         filterChain.doFilter(request, response);
 
     }
+
 
     private String parseJwt(HttpServletRequest request){
         String headerAuth = request.getHeader("Authorization");

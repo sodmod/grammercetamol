@@ -20,16 +20,25 @@ public class AuthController {
     @Autowired
     Email_ConfirmationService email_confirmationService;
 
+    /*
+    * This handles registration of users
+    * */
+
     @PostMapping("/signup")
     public ResponseEntity<?> register(@RequestBody @Validated SignupRequest signupRequest){
         return services.registerUser(signupRequest);
     }
 
+
+    /*This handles the login of a user and assigning jwt to the user so as to have access a secured api*/
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest){
         return services.authenticateUser(loginRequest);
     }
 
+    /*This handles the confrimation of a mail.. It verifies if the user inserted the right mail
+    * by sending mail to the provided mail the user use during registration
+    * */
     @GetMapping("/confirm/token/{token}")
     public ResponseEntity<?> confirmOtp(@PathVariable("token") String token){
         return null;

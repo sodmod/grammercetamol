@@ -1,5 +1,9 @@
 package com.grammercetamol.security.jwt;
 
+/*
+* This component handles exceptional error if the jwt parsed in trying to access unauthorized resources
+* */
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
